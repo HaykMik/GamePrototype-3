@@ -10,6 +10,9 @@ public class PlayerControllerX : MonoBehaviour
     private float gravityModifier = 1.5f;
     private Rigidbody playerRb;
 
+    private float yMaxBound = 14;
+    private float yMinBound = 1.5f;
+
     public ParticleSystem explosionParticle;
     public ParticleSystem fireworksParticle;
 
@@ -37,6 +40,16 @@ public class PlayerControllerX : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && !gameOver)
         {
             playerRb.AddForce(Vector3.up * floatForce);
+        }
+
+        if (transform.position.y > yMaxBound)
+        {
+            transform.position = new Vector3(transform.position.x, yMaxBound, transform.position.z);
+        }
+
+        if (transform.position.y < yMinBound)
+        {
+            transform.position = new Vector3(transform.position.x, yMinBound, transform.position.z);
         }
     }
 
