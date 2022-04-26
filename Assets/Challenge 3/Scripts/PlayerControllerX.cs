@@ -30,7 +30,6 @@ public class PlayerControllerX : MonoBehaviour
 
         // Apply a small upward force at the start of the game
         //playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
-
     }
 
     // Update is called once per frame

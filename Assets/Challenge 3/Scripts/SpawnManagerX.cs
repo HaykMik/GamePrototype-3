@@ -25,7 +25,7 @@ public class SpawnManagerX : MonoBehaviour
         int index = Random.Range(0, objectPrefabs.Length);
 
         // If game is still active, spawn new object
-        if (playerControllerScript.gameOver != true)
+        if (!playerControllerScript.gameOver)
         {
             Instantiate(objectPrefabs[index], spawnLocation, objectPrefabs[index].transform.rotation);
         }
