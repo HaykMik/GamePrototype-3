@@ -11,7 +11,6 @@ public class PlayerControllerX : MonoBehaviour
     private Rigidbody playerRb;
 
     private float yMaxBound = 14;
-    private float yMinBound = 1.5f;
 
     public ParticleSystem explosionParticle;
     public ParticleSystem fireworksParticle;
@@ -19,6 +18,7 @@ public class PlayerControllerX : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
+    public AudioClip bounceSound;
 
 
     // Start is called before the first frame update
@@ -45,11 +45,6 @@ public class PlayerControllerX : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, yMaxBound, transform.position.z);
         }
-
-        if (transform.position.y < yMinBound)
-        {
-            transform.position = new Vector3(transform.position.x, yMinBound, transform.position.z);
-        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -70,6 +65,9 @@ public class PlayerControllerX : MonoBehaviour
             fireworksParticle.Play();
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
+        } else if (other.gameObject.CompareTag("Ground"))
+        {
+            playerAudio.PlayOneShot(bounceSound);
         }
 
     }
