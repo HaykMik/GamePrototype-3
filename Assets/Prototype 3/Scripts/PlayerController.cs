@@ -18,13 +18,17 @@ public class PlayerController : MonoBehaviour
     public float gravityMod;
     public bool isOnGround;
     public bool gameOver;
+    public bool isSecondJump;
+
+    private float yMaxBound = 6.5f;
 
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
-        Physics.gravity *= gravityMod;
         playerAudio = GetComponent<AudioSource>();
+
+        Physics.gravity *= gravityMod;
     }
 
     // Update is called once per frame
@@ -32,24 +36,43 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false;
-            playerAnim.SetTrigger("Jump_trig");
-            dirtParticle.Stop();
-            playerAudio.PlayOneShot(jumpSound);
+            Jump();
         }
+        else if (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !isSecondJump)
+        {
+            Jump();
+            isSecondJump = true;
+        }
+
+        if (transform.position.y > yMaxBound)
+        {
+            transform.position = new Vector3(transform.position.x, yMaxBound, transform.position.z);
+        }
+    }
+
+    void Jump()
+    {
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isOnGround = false;
+
+        playerAnim.SetTrigger("Jump_trig");
+        dirtParticle.Stop();
+        playerAudio.PlayOneShot(jumpSound);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && !gameOver)
         {
             isOnGround = true;
+            isSecondJump = false;
             dirtParticle.Play();
-        } else if (collision.gameObject.CompareTag("Obstacle"))
+        }
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
             gameOver = true;
             Debug.Log("Game Over!");
+
             playerAnim.SetBool("Death_b", true);
             explosionParticle.Play();
             dirtParticle.Stop();
