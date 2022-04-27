@@ -7,10 +7,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Animator playerAnim;
     private AudioSource playerAudio;
+
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
+
     public AudioClip jumpSound;
     public AudioClip crashSound;
+
     public float jumpForce = 10;
     public float gravityMod;
     public bool isOnGround;
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && gameOver != true)
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;

@@ -5,24 +5,27 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs;
-    private Vector3 spawnPos = new Vector3(25, 0, 0);
-    private float startDelay;
-    private float repeatRate;
     private PlayerController playerControllerScripts;
 
     void Start()
     {
         playerControllerScripts = GameObject.Find("Player").GetComponent<PlayerController>();
-        InvokeRepeating("SpawnObstacle", startDelay = Random.Range(1f, 5f), repeatRate = Random.Range(1f, 5f));
+
+        float startDelay = Random.Range(1.0f, 5.0f);
+        Invoke("SpawnObstacle", startDelay);
     }
 
     void SpawnObstacle()
     {
-        int index = Random.Range(0, obstaclePrefabs.Length);
-
-        if (playerControllerScripts.gameOver == false)
+        Vector3 spawnPos = new Vector3(25, 0, 0);
+        int randomObstacle = Random.Range(0, obstaclePrefabs.Length);
+        
+        if (!playerControllerScripts.gameOver)
         {
-            Instantiate(obstaclePrefabs[index], spawnPos, obstaclePrefabs[index].transform.rotation);
+            Instantiate(obstaclePrefabs[randomObstacle], spawnPos, obstaclePrefabs[randomObstacle].transform.rotation);
         }
+
+        float spawnInterval = Random.Range(1.0f, 5.0f);
+        Invoke("SpawnObstacle", spawnInterval);
     }
 }
