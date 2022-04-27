@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
             Instantiate(obstaclePrefabs[randomObstacle], spawnPos, obstaclePrefabs[randomObstacle].transform.rotation);
         }
 
-        float spawnInterval = Random.Range(1.0f, 5.0f);
+        float spawnInterval = Random.Range(2.0f, 5.0f);
         Invoke("SpawnObstacle", spawnInterval);
     }
 }
