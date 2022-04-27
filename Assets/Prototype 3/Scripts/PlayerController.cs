@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Animator playerAnim;
     private AudioSource playerAudio;
+    private MoveLeft moveLeftScript;
 
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
+        moveLeftScript = GameObject.Find("Background").GetComponent<MoveLeft>();
+        //moveLeftScript = GameObject.FindGameObjectsWithTag("Obstacle").;
 
         Physics.gravity *= gravityMod;
     }
@@ -43,10 +46,17 @@ public class PlayerController : MonoBehaviour
             Jump();
             isSecondJump = true;
         }
-
         if (transform.position.y > yMaxBound)
         {
             transform.position = new Vector3(transform.position.x, yMaxBound, transform.position.z);
+        }
+
+        if (Input.GetKey(KeyCode.F))
+        {
+            Dash();
+        } else
+        {
+            moveLeftScript.speed = 30f;
         }
     }
 
@@ -58,6 +68,11 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetTrigger("Jump_trig");
         dirtParticle.Stop();
         playerAudio.PlayOneShot(jumpSound);
+    }
+
+    void Dash()
+    {
+        moveLeftScript.speed = 60f;
     }
 
     private void OnCollisionEnter(Collision collision)

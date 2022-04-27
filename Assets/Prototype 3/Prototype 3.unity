@@ -400,7 +400,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &534669904
 Camera:
   m_ObjectHideFlags: 0
@@ -776,9 +776,10 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: 08ab7053d586c458db3774d33c141a4b, type: 3}
   crashSound: {fileID: 8300000, guid: 913d6445ee8cc4152a9c18da590ee203, type: 3}
   jumpForce: 700
-  gravityMod: 3
+  gravityMod: 3.5
   isOnGround: 1
   gameOver: 0
+  isSecondJump: 0
 --- !u!65 &975642063
 BoxCollider:
   m_ObjectHideFlags: 0
