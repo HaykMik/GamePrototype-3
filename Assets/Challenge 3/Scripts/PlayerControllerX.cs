@@ -9,6 +9,7 @@ public class PlayerControllerX : MonoBehaviour
     public float floatForce;
     private float gravityModifier = 1.5f;
     private Rigidbody playerRb;
+    private BoxCollider playerBounce;
 
     private float yMaxBound = 14;
 
@@ -27,6 +28,7 @@ public class PlayerControllerX : MonoBehaviour
         Physics.gravity *= gravityModifier;
         playerRb = GetComponent<Rigidbody>();
         playerAudio = GetComponent<AudioSource>();
+        playerBounce = GetComponent<BoxCollider>();
 
         // Apply a small upward force at the start of the game
         //playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
@@ -57,6 +59,7 @@ public class PlayerControllerX : MonoBehaviour
             gameOver = true;
             Debug.Log("Game Over!");
             Destroy(other.gameObject);
+            playerBounce.material.bounceCombine = PhysicMaterialCombine.Minimum;
         } 
 
         // if player collides with money, fireworks
@@ -65,11 +68,9 @@ public class PlayerControllerX : MonoBehaviour
             fireworksParticle.Play();
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
-        } else if (other.gameObject.CompareTag("Ground"))
+        } else if (other.gameObject.CompareTag("Ground") && !gameOver)
         {
             playerAudio.PlayOneShot(bounceSound);
         }
-
     }
-
 }

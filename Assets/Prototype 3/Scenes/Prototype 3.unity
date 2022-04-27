@@ -250,7 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8b5fb6625e2ba4b9df9d059f3c40e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclePrefab: {fileID: 5580630340431150769, guid: 5f779dc551edbd342b51847e99d53801, type: 3}
+  obstaclePrefabs:
+  - {fileID: 5580630340431150769, guid: 5f779dc551edbd342b51847e99d53801, type: 3}
 --- !u!4 &412654578
 Transform:
   m_ObjectHideFlags: 0
@@ -396,7 +397,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &534669904
 Camera:
   m_ObjectHideFlags: 0
