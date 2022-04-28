@@ -9,11 +9,13 @@ public class MoveLeft : MonoBehaviour
 
     private Animator playerAnim;
     private PlayerController playerControllerScript;
+    private Score scoreScript;
 
     private void Start()
     {
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         playerAnim = GameObject.Find("Player").GetComponent<Animator>();
+        scoreScript = GameObject.Find("Main Camera").GetComponent<Score>();
     }
 
     void Update()
@@ -30,17 +32,13 @@ public class MoveLeft : MonoBehaviour
 
         if (Input.GetKey(KeyCode.F) && !playerControllerScript.gameOver && playerControllerScript.isOnGround)
         {
-            speed = 60f;
+            speed = 55f;
             playerAnim.speed = 2f;
+            scoreScript.score += Time.deltaTime * 2;
         } else
         {
             speed = 30f;
             playerAnim.speed = 1f;
         }
-    }
-
-    void Dash()
-    {
-        speed *= 2;
     }
 }

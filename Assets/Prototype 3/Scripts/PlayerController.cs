@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Animator playerAnim;
     private AudioSource playerAudio;
+    private Score scoreScript;
 
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
         playerAnim = GetComponent<Animator>();
 
         playerAudio = GetComponent<AudioSource>();
+
+        scoreScript = GameObject.Find("Main Camera").GetComponent<Score>();
     }
 
     void Update()
