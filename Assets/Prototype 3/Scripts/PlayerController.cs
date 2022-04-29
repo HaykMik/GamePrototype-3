@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private Animator playerAnim;
     private AudioSource playerAudio;
-    private Score scoreScript;
 
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
@@ -15,25 +14,33 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip crashSound;
 
+    public Vector3 startPos = new Vector3(-7, 0, 0);
+    public Vector3 endPos = new Vector3(0, 0, 0);
+
     public float jumpForce = 10;
     public float gravityMod;
     public bool isOnGround;
     public bool gameOver;
     public bool isSecondJump;
 
+    private float t = 1;
     private float yMaxBound = 6.5f;
 
     void Start()
     {
         Physics.gravity *= gravityMod;
 
-        playerRb = GetComponent<Rigidbody>();
+        Vector3.Lerp(startPos, endPos, t);
 
-        playerAnim = GetComponent<Animator>();
+        // Get components
+        {
+            playerRb = GetComponent<Rigidbody>();
 
-        playerAudio = GetComponent<AudioSource>();
+            playerAnim = GetComponent<Animator>();
 
-        scoreScript = GameObject.Find("Main Camera").GetComponent<Score>();
+            playerAudio = GetComponent<AudioSource>();
+        }
+
     }
 
     void Update()
@@ -71,6 +78,7 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
             isSecondJump = false;
             dirtParticle.Play();
+            playerAnim.SetFloat("Speed_f", 1f);
         }
         if (collision.gameObject.CompareTag("Obstacle"))
         {
