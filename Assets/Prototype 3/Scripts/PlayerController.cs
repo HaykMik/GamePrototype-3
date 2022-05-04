@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         {
             isSecondJump = true;
             Jump();
-            playerAnim.Play("Running_Jump", 3,0f);
+            playerAnim.Play("Running_Jump", 3, 0f);
         }
 
         // Bound for jumping
