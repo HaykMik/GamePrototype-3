@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public bool isOnGround;
     public bool gameOver;
     public bool isSecondJump;
+    public bool dash;
 
     private float yMaxBound = 6.5f;
 
@@ -50,6 +51,17 @@ public class PlayerController : MonoBehaviour
             isSecondJump = true;
             Jump();
             playerAnim.Play("Running_Jump", 3, 0f);
+        }
+
+        // Dash
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            dash = true;
+            playerAnim.SetFloat("Speed_Multiplier", 2.0f);
+        } else if (dash)
+        {
+            dash = false;
+            playerAnim.SetFloat("Speed_Multiplier", 1.0f);
         }
 
         // Bound for jumping
