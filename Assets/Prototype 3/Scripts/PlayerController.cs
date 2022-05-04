@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Dash
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && !gameOver)
         {
             dash = true;
             playerAnim.SetFloat("Speed_Multiplier", 2.0f);
@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
             dirtParticle.Play();
+            Debug.Log("Ground works");
             playerAnim.SetFloat("Speed_f", 1f);
         }
         if (collision.gameObject.CompareTag("Obstacle") )
