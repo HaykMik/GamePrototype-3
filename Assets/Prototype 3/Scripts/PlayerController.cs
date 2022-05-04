@@ -14,23 +14,17 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip crashSound;
 
-    public Vector3 startPos = new Vector3(-7, 0, 0);
-    public Vector3 endPos = new Vector3(0, 0, 0);
-
     public float jumpForce = 10;
     public float gravityMod;
     public bool isOnGround;
     public bool gameOver;
     public bool isSecondJump;
 
-    private float t = 1;
     private float yMaxBound = 6.5f;
 
     void Start()
     {
         Physics.gravity *= gravityMod;
-
-        Vector3.Lerp(startPos, endPos, t);
 
         // Get components
         {
@@ -45,16 +39,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Jump
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             Jump();
+            isSecondJump = false;
         }
         else if (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !isSecondJump)
         {
-            Jump();
             isSecondJump = true;
+            Jump();
+            playerAnim.Play("Running_Jump", 3,0f);
         }
 
+        // Bound for jumping
         if (transform.position.y > yMaxBound)
         {
             transform.position = new Vector3(transform.position.x, yMaxBound, transform.position.z);
@@ -66,7 +64,8 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isOnGround = false;
 
-        playerAnim.SetTrigger("Jump_trig");
+        if (!isSecondJump) { playerAnim.Play("Running_Jump"); }
+
         dirtParticle.Stop();
         playerAudio.PlayOneShot(jumpSound);
     }
@@ -76,11 +75,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && !gameOver)
         {
             isOnGround = true;
-            isSecondJump = false;
             dirtParticle.Play();
             playerAnim.SetFloat("Speed_f", 1f);
         }
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") )
         {
             gameOver = true;
             Debug.Log("Game Over!");
